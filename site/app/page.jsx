@@ -1,6 +1,7 @@
 import CopyButton from './components/CopyButton';
 import CopyLine from './components/CopyLine';
-import SavingsCounter from './components/SavingsCounter';
+import SiteHeader from './components/SiteHeader';
+import SiteFooter from './components/SiteFooter';
 
 const INSTALL = 'brew install homeplate-ci/tap/homeplate';
 const GITHUB = 'https://github.com/sikmabull/homeplate';
@@ -8,20 +9,7 @@ const GITHUB = 'https://github.com/sikmabull/homeplate';
 export default function Page() {
   return (
     <div>
-      <header className="site">
-        <div className="wrap bar">
-          <div className="brand">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/logo/mark-primary.svg" alt="Homeplate" width="17" height="17" />
-            <span>homeplate</span>
-          </div>
-          <nav className="site">
-            <a href="#how">How it works</a>
-            <a href="#honest">The honest part</a>
-            <a className="gh" href={GITHUB}>GitHub ↗</a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="wrap">
         <div className="hero">
@@ -118,20 +106,7 @@ export default function Page() {
 
       <section className="wrap block">
         <div className="inner">
-          <div className="kicker">03 / Ledger</div>
-          <div className="content">
-            <SavingsCounter target={342.8} />
-            <div className="savings-meta">
-              <span>net saved this month · after the $0.002/min fee · live from <strong>homeplate status</strong></span>
-              <span><span className="dot" />1,284 jobs run locally</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="wrap block">
-        <div className="inner">
-          <div className="kicker">04 / Offline</div>
+          <div className="kicker">03 / Offline</div>
           <div className="content">
             <h2>Works when GitHub doesn’t.</h2>
             <p className="lead">
@@ -154,7 +129,7 @@ export default function Page() {
 
       <section className="wrap block" id="honest">
         <div className="inner">
-          <div className="kicker">05 / Caveats</div>
+          <div className="kicker">04 / Caveats</div>
           <div className="content">
             <h2>The honest part.</h2>
             <dl className="caveats">
@@ -194,14 +169,7 @@ export default function Page() {
         </div>
       </section>
 
-      <footer className="site wrap">
-        <a href={GITHUB}>GitHub</a>
-        <a href="#how">How it works</a>
-        <a href={GITHUB + '/blob/main/README.md'}>Docs</a>
-        <span>Made during a GitHub outage.</span>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/logo/mark-primary.svg" alt="" width="11" height="11" />
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

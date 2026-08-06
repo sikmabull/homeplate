@@ -22,6 +22,16 @@ experience instead of a weekend of YAML.
 
 ---
 
+## Who's behind it
+
+Homeplate is built by **[@MerkleGhost](https://x.com/MerkleGhost)**, coming
+from a hardware background — recycling, repair, reuse. The instincts behind
+the tool: hardware you already own deserves a second job, and you shouldn't
+depend on outside infrastructure for work your own silicon can do. Follow the
+build on X, and a star on the repo goes a long way.
+
+---
+
 ## Known limits (read this first)
 
 Most tools bury this. Here it is at the top, because the fastest way to lose

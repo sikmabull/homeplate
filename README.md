@@ -15,6 +15,18 @@ Self-hosted is **not $0** — $0.002/min on private repos since March 2026,
 free on public repos — but that is still **up to ~31x cheaper than hosted
 macOS**, and you own the silicon. Homeplate never claims otherwise.
 
+## Who
+
+Homeplate is built by **[@MerkleGhost](https://x.com/MerkleGhost)**. The
+project comes out of a hardware background — recycling, repair, watching
+working machines get thrown away — and it shows: Homeplate exists to give
+hardware you already own a second job, and to stop depending on outside
+infrastructure you don't control for work your own silicon can do. That's the
+foundation the whole tool is built on.
+
+Like the philosophy? **[Follow @MerkleGhost on X](https://x.com/MerkleGhost)**
+and **give this repo a star** — it helps more than you'd think.
+
 ## This repository
 
 | Path | What it is |
