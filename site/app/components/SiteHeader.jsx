@@ -12,6 +12,7 @@ export default function SiteHeader() {
         <nav className="site">
           <a href="/#how">How it works</a>
           <a href="/#honest">The honest part</a>
+          <a href="/docs/">Docs</a>
           <a href="/about/">About</a>
           <a className="gh" href="https://github.com/sikmabull/homeplate">GitHub ↗</a>
         </nav>

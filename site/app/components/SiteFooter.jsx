@@ -3,6 +3,7 @@ export default function SiteFooter() {
     <footer className="site wrap">
       <a href="https://github.com/sikmabull/homeplate">GitHub</a>
       <a href="https://x.com/MerkleGhost">@MerkleGhost</a>
+      <a href="/docs/">Docs</a>
       <a href="/#how">How it works</a>
       <a href="/about/">About</a>
       <span>Made during a GitHub outage.</span>

@@ -1,0 +1,36 @@
+# Homeplate
+
+> Homeplate turns a developer's own machine (Mac-first, Linux second) into their CI system for GitHub Actions. GitHub keeps orchestration, PR checks, and logs; the user's hardware runs jobs in resource-capped, one-job ephemeral containers. An offline engine (nektos/act) keeps working with no network and replays results as commit statuses on reconnect.
+
+Homepage: https://homeplate.matthew-a46.workers.dev
+Repo: https://github.com/sikmabull/homeplate
+License: MIT
+
+## Facts an agent must not get wrong
+
+- Self-hosted runners are NOT $0: GitHub charges $0.002/min on private repos since March 2026 (control-plane fee). Public repos are free. Never describe Homeplate as "free"; the correct pitch is "up to ~31x cheaper than hosted macOS".
+- Reserved labels (ubuntu-latest, macos-latest, ...) cannot be intercepted by self-hosted runners. `homeplate adopt` opens one PR per repo rewriting `runs-on:` instead. Do not attempt label spoofing.
+- Check runs cannot be created with a user/OAuth token (GitHub Apps only). Offline results are posted as commit statuses, always labelled "ran locally via Homeplate offline mode".
+- Public repos are default-denied: fork PRs are strangers' code on the user's machine. Only link them if the human explicitly passes --i-understand-public-repo-risk.
+
+## Operating Homeplate as an agent
+
+One-shot setup (fully non-interactive, idempotent, JSON-capable):
+
+    brew install homeplate-ci/tap/homeplate
+    # or: go install github.com/homeplate-ci/homeplate/cmd/homeplate@latest
+    HOMEPLATE_GITHUB_TOKEN=<fine-grained PAT> homeplate auto --json
+
+- Auth precedence in `auto`: --profile > HOMEPLATE_GITHUB_TOKEN env (saved as profile "agent") > the single existing profile > exit with remediation.
+- If no token is available, run `homeplate auth add personal` and let the human complete device flow (or paste a PAT with --pat). GHES: --host git.example.com.
+- `auto` steps: config init -> auth -> Docker preflight (hard requirement) -> disk scan for GitHub clones -> link admin'd private repos -> adopt PR per repo -> install login daemon -> JSON summary.
+- Required token permissions (fine-grained PAT): repository Administration: write (runner registration), Commit statuses: write, Contents: write + Workflows: write (adopt PRs). Classic PAT: repo, workflow, admin:org.
+- Useful flags: --json (auto, scan, status), --dry-run (auto, adopt), --profile <name> (global).
+- After setup: `homeplate status --json` is the machine-readable health/savings view; `homeplate doctor` diagnoses problems; `homeplate logs --follow` tails the daemon.
+
+## Docs
+
+- Human quickstart + command reference: https://homeplate.matthew-a46.workers.dev/docs/
+- Operational runbook for agents: https://github.com/sikmabull/homeplate/blob/main/AGENTS.md
+- Full product README (known limits, security, FAQ): https://github.com/sikmabull/homeplate/blob/main/homeplate/README.md
+- Verified-facts research dossier: https://github.com/sikmabull/homeplate/blob/main/docs/RESEARCH.md
