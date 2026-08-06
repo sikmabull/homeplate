@@ -1,0 +1,8 @@
+name = "homeplate"
+compatibility_date = "2025-08-01"
+
+# Static-exported Next.js site served from Workers static assets.
+[assets]
+directory = "./out"
+html_handling = "force-trailing-slash"
+not_found_handling = "404-page"
