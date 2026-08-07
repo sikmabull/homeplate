@@ -7,7 +7,7 @@ containers — and PR checks go green exactly as if GitHub ran them. Offline
 mode keeps working on battery with no wifi and posts results when you're back.
 
 ```bash
-brew install homeplate-ci/tap/homeplate
+brew install sikmabull/tap/homeplate
 homeplate auto        # auth → scan disk → link repos → adopt PRs → daemon
 ```
 

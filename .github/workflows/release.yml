@@ -1,0 +1,76 @@
+# Release pipeline: tag vX.Y.Z -> build 4 platforms -> GitHub release -> update tap.
+# Push a tag:  git tag v0.2.0 && git push origin v0.2.0
+name: release
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Test
+        working-directory: homeplate
+        run: go test ./...
+      - name: Build tarballs
+        working-directory: homeplate
+        run: |
+          set -euo pipefail
+          V="${GITHUB_REF_NAME#v}"
+          mkdir -p dist
+          for t in darwin-arm64 darwin-amd64 linux-arm64 linux-amd64; do
+            GOOS=${t%-*} GOARCH=${t#*-} go build -trimpath \
+              -ldflags "-s -w -X github.com/homeplate-ci/homeplate/internal/cli.Version=$V -X github.com/homeplate-ci/homeplate/internal/cli.Commit=${GITHUB_SHA::7}" \
+              -o dist/build-$t/homeplate ./cmd/homeplate
+            (cd dist/build-$t && tar czf ../homeplate_${V}_${t}.tar.gz homeplate)
+          done
+          (cd dist && shasum -a 256 homeplate_*.tar.gz > checksums.txt)
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: homeplate/dist/homeplate_*.tar.gz
+          generate_release_notes: true
+      # NOTE: the default GITHUB_TOKEN cannot push to another repo. Create a
+      # fine-grained PAT with contents:write on sikmabull/homebrew-tap and add
+      # it as the TAP_TOKEN repo secret; this step no-ops without it.
+      - name: Update Homebrew tap
+        if: ${{ secrets.TAP_TOKEN != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.TAP_TOKEN }}
+        run: |
+          set -euo pipefail
+          V="${GITHUB_REF_NAME#v}"
+          git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/sikmabull/homebrew-tap.git" tap
+          # Regenerate the formula from the real checksums.
+          BASE="https://github.com/sikmabull/homeplate/releases/download/${GITHUB_REF_NAME}/homeplate_${V}_"
+          sha() { grep "${1}.tar.gz" homeplate/dist/checksums.txt | cut -d" " -f1; }
+          {
+            echo 'class Homeplate < Formula'
+            echo '  desc "Bring your runners home: your machine as your GitHub Actions CI"'
+            echo '  homepage "https://github.com/sikmabull/homeplate"'
+            echo "  version \"${V}\""
+            echo '  license "MIT"'
+            echo '  on_macos do'
+            echo "    on_arm { url \"${BASE}darwin-arm64.tar.gz\"; sha256 \"$(sha darwin-arm64)\" }"
+            echo "    on_intel { url \"${BASE}darwin-amd64.tar.gz\"; sha256 \"$(sha darwin-amd64)\" }"
+            echo '  end'
+            echo '  on_linux do'
+            echo "    on_arm { url \"${BASE}linux-arm64.tar.gz\"; sha256 \"$(sha linux-arm64)\" }"
+            echo "    on_intel { url \"${BASE}linux-amd64.tar.gz\"; sha256 \"$(sha linux-amd64)\" }"
+            echo '  end'
+            echo '  def install; bin.install "homeplate"; end'
+            echo '  test do; assert_match version.to_s, shell_output("#{bin}/homeplate --version"); end'
+            echo 'end'
+          } > tap/Formula/homeplate.rb
+          cd tap
+          git config user.name "homeplate-bot"
+          git config user.email "bot@sikmabull"
+          git commit -am "homeplate ${V}"
+          git push

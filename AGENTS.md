@@ -9,7 +9,7 @@ The user will ask for some variant of: "install this CLI and point all my
 projects' Actions at this computer." The complete, correct execution is:
 
 ```bash
-brew install homeplate-ci/tap/homeplate        # or go install github.com/homeplate-ci/homeplate/cmd/homeplate@latest
+brew install sikmabull/tap/homeplate        # or go install github.com/homeplate-ci/homeplate/cmd/homeplate@latest
 brew install act                                # optional: offline engine
 HOMEPLATE_GITHUB_TOKEN=<token> homeplate auto --json
 ```

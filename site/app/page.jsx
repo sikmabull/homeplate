@@ -3,7 +3,7 @@ import CopyLine from './components/CopyLine';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 
-const INSTALL = 'brew install homeplate-ci/tap/homeplate';
+const INSTALL = 'brew install sikmabull/tap/homeplate';
 const GITHUB = 'https://github.com/sikmabull/homeplate';
 
 export default function Page() {

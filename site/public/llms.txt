@@ -17,7 +17,7 @@ License: MIT
 
 One-shot setup (fully non-interactive, idempotent, JSON-capable):
 
-    brew install homeplate-ci/tap/homeplate
+    brew install sikmabull/tap/homeplate
     # or: go install github.com/homeplate-ci/homeplate/cmd/homeplate@latest
     HOMEPLATE_GITHUB_TOKEN=<fine-grained PAT> homeplate auto --json
 

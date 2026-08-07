@@ -9,11 +9,11 @@ export const metadata = {
 };
 
 const GITHUB = 'https://github.com/sikmabull/homeplate';
-const INSTALL = 'brew install homeplate-ci/tap/homeplate';
+const INSTALL = 'brew install sikmabull/tap/homeplate';
 
 const AGENT_PROMPT = `Install Homeplate and move all my GitHub Actions CI onto this computer.
 
-1. Install:  brew install homeplate-ci/tap/homeplate
+1. Install:  brew install sikmabull/tap/homeplate
    (or: go install github.com/homeplate-ci/homeplate/cmd/homeplate@latest)
 2. Run:      homeplate auto --json
    It authenticates (device flow, or I will paste a fine-grained PAT),

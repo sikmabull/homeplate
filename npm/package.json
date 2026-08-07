@@ -1,0 +1,35 @@
+{
+  "name": "homeplate",
+  "version": "0.1.0",
+  "description": "Bring your runners home: your machine as your GitHub Actions CI",
+  "keywords": [
+    "github-actions",
+    "ci",
+    "self-hosted",
+    "runner",
+    "cicd"
+  ],
+  "homepage": "https://github.com/sikmabull/homeplate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sikmabull/homeplate.git"
+  },
+  "license": "MIT",
+  "bin": {
+    "homeplate": "bin/run.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ]
+}

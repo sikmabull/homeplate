@@ -239,7 +239,7 @@ The one-shot version (also the version an AI assistant can run for you —
 fully non-interactive, idempotent, JSON-capable):
 
 ```bash
-brew install homeplate-ci/tap/homeplate
+brew install sikmabull/tap/homeplate
 HOMEPLATE_GITHUB_TOKEN=<fine-grained PAT> homeplate auto
 # auth → scan your disk for GitHub clones → link what you admin →
 # open the adopt PR per repo → install the login daemon. Done.
@@ -248,7 +248,7 @@ HOMEPLATE_GITHUB_TOKEN=<fine-grained PAT> homeplate auto
 Step by step:
 
 ```bash
-brew install homeplate-ci/tap/homeplate
+brew install sikmabull/tap/homeplate
 homeplate init                  # auth, sized defaults, daemon install
 homeplate scan                  # find GitHub clones on this machine (--link --adopt to act)
 homeplate link                  # checklist of repos/orgs you can admin
